@@ -3,8 +3,8 @@ import pyxel
 WINDOW_BASE = 16
 WINDOW_H = 9 * WINDOW_BASE
 WINDOW_W = 16* WINDOW_BASE
-CAT_H = 22
-CAT_W = 22
+IKA_H = 22
+IKA_W = 22
 
 class Vec2:
 	def __init__(self, x, y):
@@ -39,7 +39,7 @@ class App:
 
 		pyxel.text(WINDOW_W/2, WINDOW_H/2, "Splatoon3", pyxel.frame_count % 16)
 
-		pyxel.blt(pyxel.mouse_x, pyxel.mouse_y, self.IMG_ID1, 0, 0, CAT_W, CAT_H, 13 )
+		pyxel.blt(pyxel.mouse_x, pyxel.mouse_y, self.IMG_ID1, 0, 0, IKA_W, IKA_H, 13 )
 
 	
 
