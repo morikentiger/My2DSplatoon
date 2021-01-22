@@ -3,10 +3,18 @@ import pyxel
 WINDOW_BASE = 16
 WINDOW_H = 9 * WINDOW_BASE
 WINDOW_W = 16* WINDOW_BASE
-CAT_H = 16
-CAT_W = 16
+CAT_H = 22
+CAT_W = 22
 
-class app:
+class Vec2:
+	def __init__(self, x, y):
+		self.x = x
+		self.y = y
+
+# class ika:
+# 	def __init__(self)
+
+class App:
 	def __init__(self):
 		self.IMG_ID0 = 0
 		self.IMG_ID1 = 1
@@ -17,7 +25,7 @@ class app:
 
 		pyxel.init(WINDOW_W, WINDOW_H, caption="Splatoon3")
 
-		pyxel.image(self.IMG_ID1).load(0, 0, "assets/cat_16x16.png")
+		pyxel.image(self.IMG_ID1).load(0, 0, "assets/ika_22x22.png")
 
 
 		pyxel.run(self.update, self.draw)
@@ -33,5 +41,6 @@ class app:
 
 		pyxel.blt(pyxel.mouse_x, pyxel.mouse_y, self.IMG_ID1, 0, 0, CAT_W, CAT_H, 13 )
 
+	
 
-app()
+App()
