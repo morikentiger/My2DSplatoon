@@ -27,6 +27,24 @@ class Ika:
 		self.pos.y = y
 		self.vec = dx
 
+class Ink:
+	def __init__(self):
+		self.pos = Vec2(0, 0)
+		self.vec = 0
+		self.size = 2
+		self.speed = 4
+		self.range = 16
+		self.color = 8 # 212,24,108
+
+	def update(self, x, y, dx, size, speed, range, color):
+		self.pos.x = x
+		self.pos.y = y
+		self.vec = dx
+		self.size = size
+		self.speed = speed
+		self.range = range
+		self.color = color
+
 class App:
 	def __init__(self):
 		self.IMG_ID0 = 0
@@ -40,8 +58,11 @@ class App:
 
 		pyxel.image(self.IMG_ID1).load(0, 0, "assets/ika_22x22.png")
 
+		# make instance
 		self.ika = Ika(self.IMG_ID1)
-
+		self.inks = []
+		self.temp_ink = Ink()
+		self.inks.append(self.temp_ink)
 
 		pyxel.run(self.update, self.draw)
 
@@ -50,7 +71,6 @@ class App:
 			pyxel.quit()
 		
 		# ======= ctrl ika ========
-
 		if pyxel.btnp(pyxel.KEY_W, True, 1):
 			self.ika.pos.y -= self.ika.speed
 			self.ika.dy = 1
@@ -63,17 +83,46 @@ class App:
 		if pyxel.btnp(pyxel.KEY_D, True, 1):
 			self.ika.pos.x += self.ika.speed
 			self.ika.dx = 1
-		
-		# dx = self.ika.pos.x - self.ika.tempos.x
-		# dy = self.ika.pos.y - self.ika.tempos.y
-		
-		# self.ika.tempos = self.ika.pos
-		
 
 		if self.ika.dx != 0:
 			self.ika.update(self.ika.pos.x, self.ika.pos.y, self.ika.dx)
 		elif self.ika.dy != 0:
 			self.ika.update(self.ika.pos.x, self.ika.pos.y, self.ika.vec)
+
+		# ======= ctrl Ball ========
+		if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON, True, self.temp_ink.speed):
+			new_ink = Ink()
+			if self.ika.vec > 0:
+				new_ink.update(self.ika.pos.x + IKA_W/2 + 5,
+								self.ika.pos.y + IKA_H/2, self.ika.vec,
+								new_ink.size, new_ink.speed, new_ink.range, new_ink.color)
+			else:
+				new_ink.update(self.ika.pos.x + IKA_W/2 - 5,
+								self.ika.pos.y + IKA_H/2, self.ika.vec,
+								new_ink.size, new_ink.speed, new_ink.range, new_ink.color)
+			self.inks.append(new_ink)
+
+		ink_count = len(self.inks)
+		for i in range(ink_count):
+			if self.inks[i].pos.x - self.inks[i].range < self.inks[i].pos.x < self.inks[i].pos.x + self.inks[i].range:
+				# ink update
+				if self.inks[i].vec > 0:
+					self.inks[i].update(self.inks[i].pos.x + self.inks[i].speed,
+										self.inks[i].pos.y,
+										self.inks[i].vec, self.inks[i].size,
+										self.inks[i].speed, 
+										self.inks[i].range, 
+										self.inks[i].color)
+				else:
+					self.inks[i].update(self.inks[i].pos.x - self.inks[i].speed,
+										self.inks[i].pos.y,
+										self.inks[i].vec, self.inks[i].size,
+										self.inks[i].speed, 
+										self.inks[i].range, 
+										self.inks[i].color)
+			else:
+				del self.inks[i]
+				break
 
 	def draw(self):
 		pyxel.cls(0)
@@ -86,6 +135,8 @@ class App:
 		else:
 			pyxel.blt(self.ika.pos.x, self.ika.pos.y, self.IMG_ID1, 0, 0, IKA_W, IKA_H, 13 )
 
-	
+		# ======== draw inks =========
+		for ink in self.inks:
+			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 
 App()
