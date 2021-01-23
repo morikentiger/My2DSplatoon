@@ -159,8 +159,11 @@ class App:
 		pyxel.text(0,0, str(self.ika.vec),13)
 		
 		# ======== draw stage ======
-		for j in range(WINDOW_H):
-			for i in range(WINDOW_W):
+		i_list = list(range(WINDOW_W))
+		j_list = list(range(WINDOW_H))
+
+		for j in j_list:
+			for i in i_list:
 				pyxel.rect(i, j, 1, 1, self.stage.color)
 		
 		# ======== draw ika ========
@@ -173,6 +176,13 @@ class App:
 		for ink in self.inks:
 			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 			# pyxel.circb(ink.pos.x, ink.pos.y, ink.size, ink.color)
-		
+		pyxel.circ(33, 33, 8, 9)
+		pyxel.circ(33, 33, 7, 8)
+		pyxel.circ(33, 33, 6, 7)
+		pyxel.circ(33, 33, 5, 6)
+		pyxel.circ(33, 33, 4, 5)
+		pyxel.circ(33, 33, 3, 4)
+		pyxel.circ(33, 33, 2, 3)
+		pyxel.circ(33, 33, 1, 2)
 
 App()
