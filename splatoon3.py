@@ -2,9 +2,13 @@ import pyxel
 import itertools
 import numpy as np
 
-WINDOW_BASE = 16
-WINDOW_H = 9 * WINDOW_BASE
-WINDOW_W = 16* WINDOW_BASE
+WINDOW_BASE = 8
+WINDOW_RATIO_H = 24
+WINDOW_RATIO_W = 32
+WINDOW_H = WINDOW_RATIO_H * WINDOW_BASE
+WINDOW_W = WINDOW_RATIO_W * WINDOW_BASE
+# WINDOW_H_B = int(WINDOW_H/8)
+# WINDOW_W_B = int(WINDOW_W/8)
 IKA_H = 22
 IKA_W = 22
 
@@ -80,6 +84,8 @@ class App:
 		pyxel.init(WINDOW_W, WINDOW_H, caption="Splatoon3")
 
 		pyxel.image(self.IMG_ID1).load(0, 0, "assets/ika_22x22.png")
+
+		pyxel.mouse(True)
 
 		# make instance
 		self.ika = Ika(self.IMG_ID1)
@@ -159,12 +165,12 @@ class App:
 		pyxel.text(0,0, str(self.ika.vec),13)
 		
 		# ======== draw stage ======
-		i_list = list(range(WINDOW_W))
-		j_list = list(range(WINDOW_H))
+		i_list = list(range(WINDOW_RATIO_W))
+		j_list = list(range(WINDOW_RATIO_H))
 
 		for j in j_list:
 			for i in i_list:
-				pyxel.rect(i, j, 1, 1, self.stage.color)
+				pyxel.rect(i*WINDOW_BASE, j*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.color)
 		
 		# ======== draw ika ========
 		if self.ika.vec > 0:
@@ -175,14 +181,15 @@ class App:
 		# ======== draw inks =========
 		for ink in self.inks:
 			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
+
 			# pyxel.circb(ink.pos.x, ink.pos.y, ink.size, ink.color)
-		pyxel.circ(33, 33, 8, 9)
-		pyxel.circ(33, 33, 7, 8)
-		pyxel.circ(33, 33, 6, 7)
-		pyxel.circ(33, 33, 5, 6)
-		pyxel.circ(33, 33, 4, 5)
-		pyxel.circ(33, 33, 3, 4)
-		pyxel.circ(33, 33, 2, 3)
-		pyxel.circ(33, 33, 1, 2)
+		# pyxel.circ(33, 33, 8, 9)
+		# pyxel.circ(33, 33, 7, 8)
+		# pyxel.circ(33, 33, 6, 7)
+		# pyxel.circ(33, 33, 5, 6)
+		# pyxel.circ(33, 33, 4, 5)
+		# pyxel.circ(33, 33, 3, 4)
+		# pyxel.circ(33, 33, 2, 3)
+		# pyxel.circ(33, 33, 1, 2)
 
 App()
