@@ -1,4 +1,6 @@
 import pyxel
+import itertools
+import numpy as np
 
 WINDOW_BASE = 16
 WINDOW_H = 9 * WINDOW_BASE
@@ -49,9 +51,22 @@ class Stage:
 	def __init__(self):
 		self.size = Vec2(WINDOW_W, WINDOW_H)
 		self.color = 2
-		self.isInk = [[self.color] * self.size.x for i in range(self.size.y)]
+		self.isInk = np.zeros((WINDOW_H, WINDOW_W))
+		# self.isInk = [[self.color] * self.size.x for i in range(self.size.y)]
 		# print(self.isInk)
-
+		# ======== draw stage ======
+		# for j in range(WINDOW_H):
+		# 	for i in range(WINDOW_W):
+		# 		pyxel.rect(i, j, 1, 1, self.color)
+		
+	def update(self, isInk, x, y, size, color):
+		# for y in range(WINDOW_H):
+		# 	for x in range(WINDOW_W):
+		self.isInk = isInk
+		self.x = x
+		self.y = y
+		self.size = size
+		self.color = color
 
 class App:
 	def __init__(self):
@@ -99,17 +114,19 @@ class App:
 		elif self.ika.dy != 0:
 			self.ika.update(self.ika.pos.x, self.ika.pos.y, self.ika.vec)
 
-		# ======= ctrl Ball ========
+		# ======= ctrl Ink ========
 		if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON, True, self.temp_ink.speed):
 			new_ink = Ink()
 			if self.ika.vec > 0:
 				new_ink.update(self.ika.pos.x + IKA_W/2 + 5,
 								self.ika.pos.y + IKA_H/2, self.ika.vec,
 								new_ink.size, new_ink.speed, new_ink.range, new_ink.color)
+				self.stage.update(self.stage.isInk,self.ika.pos.x + IKA_W/2 + 5, self.ika.pos.y + IKA_H/2, new_ink.size, new_ink.color)
 			else:
 				new_ink.update(self.ika.pos.x + IKA_W/2 - 5,
 								self.ika.pos.y + IKA_H/2, self.ika.vec,
 								new_ink.size, new_ink.speed, new_ink.range, new_ink.color)
+				self.stage.update(self.stage.isInk, self.ika.pos.x + IKA_W/2 - 5, self.ika.pos.y + IKA_H/2, new_ink.size, new_ink.color)
 			self.inks.append(new_ink)
 
 		ink_count = len(self.inks)
@@ -131,6 +148,7 @@ class App:
 										self.inks[i].range, 
 										self.inks[i].color)
 			else:
+				self.stage.update(self.stage.isInk, self.inks[i].pos.x, self.inks[i].pos.y,self.inks[i].size, self.inks[i].color)
 				del self.inks[i]
 				break
 
@@ -154,7 +172,7 @@ class App:
 		# ======== draw inks =========
 		for ink in self.inks:
 			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
-		
+			# pyxel.circb(ink.pos.x, ink.pos.y, ink.size, ink.color)
 		
 
 App()
