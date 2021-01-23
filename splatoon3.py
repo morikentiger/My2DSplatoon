@@ -45,6 +45,14 @@ class Ink:
 		self.range = range
 		self.color = color
 
+class Stage:
+	def __init__(self):
+		self.size = Vec2(WINDOW_W, WINDOW_H)
+		self.color = 2
+		self.isInk = [[self.color] * self.size.x for i in range(self.size.y)]
+		# print(self.isInk)
+
+
 class App:
 	def __init__(self):
 		self.IMG_ID0 = 0
@@ -63,6 +71,8 @@ class App:
 		self.inks = []
 		self.temp_ink = Ink()
 		self.inks.append(self.temp_ink)
+
+		self.stage = Stage()
 
 		pyxel.run(self.update, self.draw)
 
@@ -129,6 +139,12 @@ class App:
 
 		pyxel.text(WINDOW_W/2, WINDOW_H/2, "Splatoon3", pyxel.frame_count % 16)
 		pyxel.text(0,0, str(self.ika.vec),13)
+		
+		# ======== draw stage ======
+		for j in range(WINDOW_H):
+			for i in range(WINDOW_W):
+				pyxel.rect(i, j, 1, 1, self.stage.color)
+		
 		# ======== draw ika ========
 		if self.ika.vec > 0:
 			pyxel.blt(self.ika.pos.x, self.ika.pos.y, self.IMG_ID1, 0, 0, -IKA_W, IKA_H, 13 )
@@ -138,5 +154,7 @@ class App:
 		# ======== draw inks =========
 		for ink in self.inks:
 			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
+		
+		
 
 App()
