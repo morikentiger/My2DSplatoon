@@ -33,7 +33,7 @@ class Ink:
 		self.vec = 0
 		self.size = 2
 		self.speed = 4
-		self.range = 16
+		self.range = 32
 		self.color = 8 # 212,24,108
 
 	def update(self, x, y, dx, size, speed, range, color):
@@ -104,7 +104,7 @@ class App:
 
 		ink_count = len(self.inks)
 		for i in range(ink_count):
-			if self.inks[i].pos.x - self.inks[i].range < self.inks[i].pos.x < self.inks[i].pos.x + self.inks[i].range:
+			if self.ika.pos.x + IKA_W/2 - self.inks[i].range < self.inks[i].pos.x and self.inks[i].pos.x < self.ika.pos.x + IKA_W/2 + self.inks[i].range:
 				# ink update
 				if self.inks[i].vec > 0:
 					self.inks[i].update(self.inks[i].pos.x + self.inks[i].speed,
