@@ -63,14 +63,16 @@ class Stage:
 		# 	for i in range(WINDOW_W):
 		# 		pyxel.rect(i, j, 1, 1, self.color)
 		
-	def update(self, isInk, x, y, size, color):
+	def update(self, isInk, size, color):
 		# for y in range(WINDOW_H):
 		# 	for x in range(WINDOW_W):
 		self.isInk = isInk
-		self.x = x
-		self.y = y
+		# self.x = x
+		# self.y = y
 		self.size = size
 		self.color = color
+
+		return self.size
 
 class App:
 	def __init__(self):
@@ -127,12 +129,12 @@ class App:
 				new_ink.update(self.ika.pos.x + IKA_W/2 + 5,
 								self.ika.pos.y + IKA_H/2, self.ika.vec,
 								new_ink.size, new_ink.speed, new_ink.range, new_ink.color)
-				self.stage.update(self.stage.isInk,self.ika.pos.x + IKA_W/2 + 5, self.ika.pos.y + IKA_H/2, new_ink.size, new_ink.color)
+				# self.stage.update(self.stage.isInk,self.ika.pos.x + IKA_W/2 + 5, self.ika.pos.y + IKA_H/2, new_ink.size, new_ink.color)
 			else:
 				new_ink.update(self.ika.pos.x + IKA_W/2 - 5,
 								self.ika.pos.y + IKA_H/2, self.ika.vec,
 								new_ink.size, new_ink.speed, new_ink.range, new_ink.color)
-				self.stage.update(self.stage.isInk, self.ika.pos.x + IKA_W/2 - 5, self.ika.pos.y + IKA_H/2, new_ink.size, new_ink.color)
+				# self.stage.update(self.stage.isInk, self.ika.pos.x + IKA_W/2 - 5, self.ika.pos.y + IKA_H/2, new_ink.size, new_ink.color)
 			self.inks.append(new_ink)
 
 		ink_count = len(self.inks)
@@ -154,7 +156,7 @@ class App:
 										self.inks[i].range, 
 										self.inks[i].color)
 			else:
-				self.stage.update(self.stage.isInk, self.inks[i].pos.x, self.inks[i].pos.y,self.inks[i].size, self.inks[i].color)
+				self.stage.size = self.stage.update(self.stage.isInk, self.inks[i].size, self.inks[i].color)
 				del self.inks[i]
 				break
 
@@ -165,13 +167,13 @@ class App:
 		pyxel.text(0,0, str(self.ika.vec),13)
 		
 		# ======== draw stage ======
-		i_list = list(range(WINDOW_RATIO_W))
-		j_list = list(range(WINDOW_RATIO_H))
+		x_list = list(range(WINDOW_RATIO_W))
+		y_list = list(range(WINDOW_RATIO_H))
 
-		for j in j_list:
-			for i in i_list:
-				pyxel.rect(i*WINDOW_BASE, j*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.color)
-		
+		for y in y_list:
+			for x in x_list:
+				pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.color)
+				# pyxel.rect(int(self.stage.size.x), int(self.stage.size.y), WINDOW_BASE, WINDOW_BASE, self.stage.color)
 		# ======== draw ika ========
 		if self.ika.vec > 0:
 			pyxel.blt(self.ika.pos.x, self.ika.pos.y, self.IMG_ID1, 0, 0, -IKA_W, IKA_H, 13 )
@@ -182,7 +184,7 @@ class App:
 		for ink in self.inks:
 			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 
-			# pyxel.circb(ink.pos.x, ink.pos.y, ink.size, ink.color)
+			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 		# pyxel.circ(33, 33, 8, 9)
 		# pyxel.circ(33, 33, 7, 8)
 		# pyxel.circ(33, 33, 6, 7)
