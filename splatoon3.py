@@ -1,4 +1,5 @@
 from numpy.core.fromnumeric import size
+from numpy.lib.arraysetops import isin
 import pyxel
 import itertools
 import numpy as np
@@ -86,7 +87,7 @@ class App:
 		self.IMG_ID0_X = WINDOW_BASE * 4
 		self.IMG_ID0_Y = WINDOW_BASE * 8
 
-		pyxel.init(WINDOW_W, WINDOW_H, caption="Splatoon3")
+		pyxel.init(WINDOW_W, WINDOW_H, caption="Splatoon3", fps=600)
 
 		pyxel.image(self.IMG_ID1).load(0, 0, "assets/ika_22x22.png")
 
@@ -166,6 +167,12 @@ class App:
 				del self.inks[i]
 				break
 
+	def drawStage(self, isink):
+		
+
+		return isink
+
+
 	def draw(self):
 		pyxel.cls(0)
 
@@ -176,11 +183,12 @@ class App:
 		x_list = list(range(WINDOW_W))
 		y_list = list(range(WINDOW_H))
 
-		for x in x_list[0:len(x_list):WINDOW_BASE-4]:
-			for y in y_list[0:len(y_list):WINDOW_BASE-4]:
+		for x in x_list[0:len(x_list):WINDOW_BASE-3]:
+			
+			for y in y_list[0:len(y_list):WINDOW_BASE-3]:
 				# pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
 				# pyxel.rect(x, y, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
-				pyxel.circ(x, y, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
+				pyxel.circ(x, y, 5, self.stage.isInk[y][x])#9)#self.stage.color)
 				#  pyxel.rect(int(self.stage.size.x), int(self.stage.size.y), WINDOW_BASE, WINDOW_BASE, self.stage.color)
 		# ======== draw ika ========
 		if self.ika.vec > 0:
