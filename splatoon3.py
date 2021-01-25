@@ -176,10 +176,10 @@ class App:
 		x_list = list(range(WINDOW_W))
 		y_list = list(range(WINDOW_H))
 
-		for x in x_list:
-			for y in y_list:
+		for x in x_list[0:len(x_list):WINDOW_BASE]:
+			for y in y_list[0:len(y_list):WINDOW_BASE]:
 				# pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
-				pyxel.rect(x, y,1,1, self.stage.isInk[y][x])#9)#self.stage.color)
+				pyxel.rect(x, y, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
 				#  pyxel.rect(int(self.stage.size.x), int(self.stage.size.y), WINDOW_BASE, WINDOW_BASE, self.stage.color)
 		# ======== draw ika ========
 		if self.ika.vec > 0:
