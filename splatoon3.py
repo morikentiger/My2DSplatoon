@@ -162,7 +162,7 @@ class App:
 				self.stage.isInk[int(self.inks[i].pos.y)][int(self.inks[i].pos.x)] = self.inks[i].color
 				# print(size(self.stage.isInk))
 				# print(self.stage.isInk)
-				self.stage.size = self.stage.update(self.stage.isInk, self.inks[i].size, self.inks[i].color)
+				# self.stage.size = self.stage.update(self.stage.isInk, self.inks[i].size, self.inks[i].color)
 				del self.inks[i]
 				break
 
@@ -176,8 +176,8 @@ class App:
 		x_list = list(range(WINDOW_W))
 		y_list = list(range(WINDOW_H))
 
-		for x in x_list[0:len(x_list):WINDOW_BASE]:
-			for y in y_list[0:len(y_list):WINDOW_BASE]:
+		for x in x_list[0:len(x_list):WINDOW_BASE-4]:
+			for y in y_list[0:len(y_list):WINDOW_BASE-4]:
 				# pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
 				# pyxel.rect(x, y, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
 				pyxel.circ(x, y, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
@@ -192,6 +192,7 @@ class App:
 		for ink in self.inks:
 			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 
+			# pyxel.circ(ink.pos.x, ink.pos.y, INKwwwwwwwwwww_H, self.stage.isInk[int(ink.pos.y)][int(ink.pos.x)])
 			# pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 		# pyxel.circ(33, 33, 8, 9)
 		# pyxel.circ(33, 33, 7, 8)
