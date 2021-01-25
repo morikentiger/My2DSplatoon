@@ -12,6 +12,8 @@ WINDOW_W = WINDOW_RATIO_W * WINDOW_BASE
 # WINDOW_W_B = int(WINDOW_W/8)
 IKA_H = 22
 IKA_W = 22
+INK_H = WINDOW_BASE
+INK_W = WINDOW_BASE
 
 
 class Vec2:
@@ -159,7 +161,7 @@ class App:
 			else:
 				self.stage.isInk[int(self.inks[i].pos.y)][int(self.inks[i].pos.x)] = self.inks[i].color
 				# print(size(self.stage.isInk))
-				print(self.stage.isInk)
+				# print(self.stage.isInk)
 				self.stage.size = self.stage.update(self.stage.isInk, self.inks[i].size, self.inks[i].color)
 				del self.inks[i]
 				break
@@ -171,13 +173,14 @@ class App:
 		pyxel.text(0,0, str(self.ika.vec),13)
 		
 		# ======== draw stage ======
-		x_list = list(range(WINDOW_RATIO_W))
-		y_list = list(range(WINDOW_RATIO_H))
+		x_list = list(range(WINDOW_W))
+		y_list = list(range(WINDOW_H))
 
-		for y in y_list:
-			for x in x_list:
-				pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[x][y])#9)#self.stage.color)
-				# pyxel.rect(int(self.stage.size.x), int(self.stage.size.y), WINDOW_BASE, WINDOW_BASE, self.stage.color)
+		for x in x_list:
+			for y in y_list:
+				# pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[y][x])#9)#self.stage.color)
+				pyxel.rect(x, y,1,1, self.stage.isInk[y][x])#9)#self.stage.color)
+				#  pyxel.rect(int(self.stage.size.x), int(self.stage.size.y), WINDOW_BASE, WINDOW_BASE, self.stage.color)
 		# ======== draw ika ========
 		if self.ika.vec > 0:
 			pyxel.blt(self.ika.pos.x, self.ika.pos.y, self.IMG_ID1, 0, 0, -IKA_W, IKA_H, 13 )
