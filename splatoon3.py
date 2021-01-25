@@ -1,3 +1,4 @@
+from numpy.core.fromnumeric import size
 import pyxel
 import itertools
 import numpy as np
@@ -156,6 +157,9 @@ class App:
 										self.inks[i].range, 
 										self.inks[i].color)
 			else:
+				self.stage.isInk[int(self.inks[i].pos.y)][int(self.inks[i].pos.x)] = self.inks[i].color
+				# print(size(self.stage.isInk))
+				print(self.stage.isInk)
 				self.stage.size = self.stage.update(self.stage.isInk, self.inks[i].size, self.inks[i].color)
 				del self.inks[i]
 				break
@@ -172,7 +176,7 @@ class App:
 
 		for y in y_list:
 			for x in x_list:
-				pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.color)
+				pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, WINDOW_BASE, WINDOW_BASE, self.stage.isInk[x][y])#9)#self.stage.color)
 				# pyxel.rect(int(self.stage.size.x), int(self.stage.size.y), WINDOW_BASE, WINDOW_BASE, self.stage.color)
 		# ======== draw ika ========
 		if self.ika.vec > 0:
@@ -184,7 +188,7 @@ class App:
 		for ink in self.inks:
 			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 
-			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
+			# pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 		# pyxel.circ(33, 33, 8, 9)
 		# pyxel.circ(33, 33, 7, 8)
 		# pyxel.circ(33, 33, 6, 7)
