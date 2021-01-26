@@ -93,10 +93,13 @@ class ReversiBoard(object):
 		for i in self.cells:
 			for cell in i:
 				if cell == WHITE:
+					pyxel.circ(cell, i, 16, 7)
 					print("W", end=" ")
 				elif cell == BLACK:
+					pyxel.circ(cell, i, 16, 8)
 					print("B", end=" ")
 				else:
+					pyxel.rect(cell, i, 16, 16, 1)
 					print("*", end=" ")
 			print("\n", end="")
 	def list_possible_cells(self, player):
