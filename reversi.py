@@ -20,8 +20,8 @@ class ReversiBoard(object):
 		self.cells[4][4] = WHITE
 
 
-		board = ReversiBoard()
-		print(*board.cells, sep='\n')
+		# board = ReversiBoard()
+		# print(*board.cells, sep='\n')
 
 	def put_disk(self, x, y, player):
 		# すでに他の石があれば置くことができない
@@ -79,3 +79,32 @@ class ReversiBoard(object):
 					else:
 						break		
 		return flippable
+	
+	def show_board(self):
+		print("--" * 20)
+		for i in self.cells:
+			for cell in i:
+				if cell == WHITE:
+					print("W", end=" ")
+				elif cell == BLACK:
+					print("B", end=" ")
+				else:
+					print("*", end=" ")
+			print("\n", end="")
+	def list_possible_cells(self, player):
+		possible = []
+		for x in range(BOARD_SIZE):
+			for y in range(BOARD_SIZE):
+				if self.cells[y][x] is not None:
+					continue
+				if self.list_flippable_disks(x, y, player) == []:
+					continue
+				else:
+					possible.append((x, y))
+		return possible
+
+if __name__ == "__main__":
+	board = ReversiBoard()
+	board.show_board()
+	board.put_disk(3, 2, BLACK)
+	board.show_board()
