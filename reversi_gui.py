@@ -90,16 +90,20 @@ class ReversiBoard(object):
 	
 	def show_board(self):
 		print("--" * 20)
+		x = 0
+		y = 0
 		for i in self.cells:
+			y += 1
 			for cell in i:
+				x += 1
 				if cell == WHITE:
-					pyxel.circ(cell, i, 16, 7)
+					pyxel.circ(x*WINDOW_BASE, y*WINDOW_BASE, 16, 7)
 					print("W", end=" ")
 				elif cell == BLACK:
-					pyxel.circ(cell, i, 16, 8)
+					pyxel.circ(x*WINDOW_BASE, y*WINDOW_BASE, 16, 8)
 					print("B", end=" ")
 				else:
-					pyxel.rect(cell, i, 16, 16, 1)
+					pyxel.rect(x*WINDOW_BASE, y*WINDOW_BASE, 16, 16, 1)
 					print("*", end=" ")
 			print("\n", end="")
 	def list_possible_cells(self, player):
@@ -203,6 +207,16 @@ if __name__ == "__main__":
 	pyxel.init(WINDOW_W, WINDOW_H, caption="リバーシ", fps=300, quit_key=pyxel.KEY_ESCAPE)
 
 	pyxel.mouse(True)
+
+	pyxel.run(update, draw)
+
+	def update(self):
+
+		return 0
+
+	def draw(self):
+
+		return 0
 
 	while(True):
 		possible = game.list_possible_cells()

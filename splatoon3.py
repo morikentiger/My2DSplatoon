@@ -148,14 +148,16 @@ class App:
 				if self.inks[i].vec > 0:
 					self.inks[i].update(self.inks[i].pos.x + self.inks[i].speed,
 										self.inks[i].pos.y,
-										self.inks[i].vec, self.inks[i].size,
+										self.inks[i].vec, 
+										self.inks[i].size,
 										self.inks[i].speed, 
 										self.inks[i].range, 
 										self.inks[i].color)
 				else:
 					self.inks[i].update(self.inks[i].pos.x - self.inks[i].speed,
 										self.inks[i].pos.y,
-										self.inks[i].vec, self.inks[i].size,
+										self.inks[i].vec, 
+										self.inks[i].size,
 										self.inks[i].speed, 
 										self.inks[i].range, 
 										self.inks[i].color)
@@ -203,7 +205,7 @@ class App:
 		# ======== draw inks =========
 		for ink in self.inks:
 			pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
-
+			pyxel.rect(ink.pos.x, ink.pos.y, 16, 16, 3)
 			# pyxel.circ(ink.pos.x, ink.pos.y, INKwwwwwwwwwww_H, self.stage.isInk[int(ink.pos.y)][int(ink.pos.x)])
 			# pyxel.circ(ink.pos.x, ink.pos.y, ink.size, ink.color)
 		# pyxel.circ(33, 33, 8, 9)
@@ -215,5 +217,10 @@ class App:
 		# pyxel.circ(33, 33, 2, 3)
 		# pyxel.circ(33, 33, 1, 2)
 		
+		# ======== draw stageInk =======
+
+
+
+
 
 App()
